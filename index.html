@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simulathrone</title>
+    <meta charset="UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div id="world_settings">
+        <textarea id="world_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">world_name</textarea>
+
+        <div id="laws">
+            Laws:&nbsp;&nbsp;<span class="clickable noselect" onclick="world.addLaw();">+</span>
+            <ul style="margin-left: -1%;" id="laws_list"></ul>
+        </div>
+        <br />
+        <div id="vars">
+            Vars:&nbsp;&nbsp;<span class="clickable noselect" onclick="world.addObjVar();">+</span>
+            <ul style="margin-left: -1%;" id="vars_list"></ul>
+        </div>
+    </div>
+
+    <div id="text_editor_wrapper">
+        <textarea id="text_editor" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        <div id="buttons">
+            <span onclick="world.deleteLaw()" class="clickable noselect">delete</span>
+            <span onclick="world.renameLaw()" class="clickable noselect">rename</span>
+            <span onclick="world.editSave()" class="clickable noselect">save</span>
+            <span onclick="world.editClose()" class="clickable noselect">close</span>
+        </div>
+    </div>
+
+    <div id="info_box" style="display: none;">
+        Object ID: <span id="info_object_id"></span><br /><br />
+        X: <span id="info_x"></span><br />
+        Y: <span id="info_y"></span>
+
+        <span id="info_box_close" class="clickable" onclick="s.getInfo()">close</span>
+    </div>
+
+    <div id="topr_buttons">
+        <span id="spawn_obj" class="clickable noselect" onclick="world.addObj()" oncontextmenu="world.toggleSpawnOpt(); return false;">+</span>
+        <span id="delete_obj" class="clickable noselect" onclick="world.delObj()">-</span>
+        <span id="del_all" class="clickable noselect" onclick="world.delAll()">X</span>
+    </div>
+
+    <div id="botr_buttons">
+        <span id="tool_hand" class="clickable noselect" style="text-decoration: underline;" onclick="s.changeTool('hand')">hand</span>
+        <span id="tool_info" class="clickable noselect" onclick="s.changeTool('info')">info</span>
+        <span id="toggle_camera" class="clickable noselect" onclick="s.toggleCamera()">undock</span>
+    </div>
+
+    <div id="botl_buttons">
+        <span class="clickable noselect" onclick="world.togglePause()" id="pause">pause</span>
+        <span class="clickable noselect" onclick="world.speed(2)" id="time_x2">x2</span>
+        <span class="clickable noselect" onclick="world.speed(1)" id="time_x2">x1</span>
+        <span class="clickable noselect" onclick="world.speed(0.5)" id="time_x0.5">x1/2</span>
+    </div>
+
+    <div id="spawn_options" style="display: none;">
+        <b>Amount:</b> <input id="spawn_amount" class="options_input" onchange="world.setSpawnOpt('amount', this.value)"></input>
+        <br /><br />
+        <b>Range:</b> <select id="spawn_range" onchange="world.setSpawnOpt('range', this.value)"><option id="spawn_range_1" value="on_screen">on screen</option><option id="spawn_range_2" value="custom">custom</option></select>
+        <br />
+        <div id="spawn_custom_range_box">
+            <br />
+            <b>X:</b> from <input id="spawn_range_x_min" class="options_input" onchange="world.setSpawnOpt('minX', this.value)"></input> to <input id="spawn_range_x_max" class="options_input" onchange="world.setSpawnOpt('maxX', this.value)"></input>
+            <br /><br />
+            <b>Y:</b> from <input id="spawn_range_y_min" class="options_input" onchange="world.setSpawnOpt('minY', this.value)"></input> to <input id="spawn_range_y_max" class="options_input" onchange="world.setSpawnOpt('maxY', this.value)"></input>
+        </div>
+        <br />
+        <b>Size:</b> from <input id="spawn_size_min" class="options_input" onchange="world.setSpawnOpt('minSize', this.value)"></input> to <input id="spawn_size_max" class="options_input" onchange="world.setSpawnOpt('maxSize', this.value)"></input>
+
+        <span id="spawn_options_close" class="clickable" onclick="world.toggleSpawnOpt()">close</span>
+    </div>
+    
+    <script src="classes/scr.js"></script>
+    <script src="classes/world.js"></script>
+    <script src="classes/object.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

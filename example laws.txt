@@ -1,0 +1,126 @@
+obj.x += obj.speedX * world.time;
+obj.y += obj.speedY * world.time;
+
+if(obj.x - obj.r < -s.w/2){
+	obj.speedX = -obj.speedX;
+	obj.x = -s.w/2 + obj.r;
+}
+if(obj.x + obj.r > s.w/2){
+	obj.speedX = -obj.speedX;
+	obj.x = s.w/2 - obj.r;
+}
+if(obj.y - obj.r < -s.h/2){
+	obj.speedY = -obj.speedY;
+	obj.y = -s.h/2 + obj.r;
+}
+if(obj.y + obj.r > s.h/2){
+	obj.speedY = -obj.speedY;
+	obj.y = s.h/2 - obj.r;
+}
+
+if(obj.collide())
+	obj.c = "yellow";
+else
+	obj.c = "red";
+
+# ----
+
+if(obj.y < s.h)
+	obj.speed += 0.2;
+if(obj.y + obj.r > s.h){
+	obj.speed = -obj.speed / 2;
+	obj.y = s.h - obj.r;
+}
+
+obj.y += obj.speed;
+
+# ----
+
+c = obj.collide();
+if(c){
+	if(obj.r > c.r + 2){
+		obj.r += c.r * 0.7;
+		c.del()
+	}
+	else if(c.r > obj.r + 2){
+		c.r += obj.r * 0.7;
+		obj.del();
+	}
+}
+
+# ----
+
+c = obj.collide(obj.r);
+
+if(c){
+	x = obj.repel(obj.speedX, obj.speedY, c.speedX, c.speedY, c, obj.r, c.r);
+	obj.speedX = x.vx1;
+	obj.speedY = x.vy1;
+	c.speedX = x.vx2;
+	c.speedY = x.vy2;
+	
+	obj.x += x.vx1;
+	obj.y += x.vy1;
+	c.x += x.vx2;
+	c.y += x.vy2;
+	
+	if(obj.c === "blue")
+		obj.c = "red";
+	else
+		obj.c = "blue";
+	if(c.c === "blue")
+		c.c = "red";
+	else
+		c.c = "blue";
+}
+
+# ----
+
+c = obj.collide(obj.r);
+
+if(c){
+	x = obj.repel(obj.speedX, obj.speedY, c.speedX, c.speedY, c, obj.r, c.r);
+	obj.speedX = x.vx1;
+	obj.speedY = x.vy1;
+	c.speedX = x.vx2;
+	c.speedY = x.vy2;
+	
+	var m = 0.3;
+	obj.x -= x.vx1*m*world.time;
+	obj.y -= x.vy1*m*world.time;
+	c.x -= x.vx2*m*world.time;
+	c.y -= x.vy2*m*world.time;
+	
+	if(obj.c === "blue")
+		obj.c = "red";
+	else
+		obj.c = "blue";
+	if(c.c === "blue")
+		c.c = "red";
+	else
+		c.c = "blue";
+}
+
+# ---- BIG movement
+
+var size = 5000;
+
+if(obj.x - obj.r < -size){
+	obj.speedX = -obj.speedX;
+	obj.x = -size + obj.r;
+}
+if(obj.x + obj.r > size){
+	obj.speedX = -obj.speedX;
+	obj.x = size - obj.r;
+}
+if(obj.y - obj.r < -size){
+	obj.speedY = -obj.speedY;
+	obj.y = -size + obj.r;
+}
+if(obj.y + obj.r > size){
+	obj.speedY = -obj.speedY;
+	obj.y = size - obj.r;
+}
+
+obj.x += obj.speedX * world.time;
+obj.y += obj.speedY * world.time;
