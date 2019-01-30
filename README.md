@@ -1,5 +1,5 @@
 # simulathrone
-Simple simulations customizable while running
+Simple simulations customizable on the fly
 
 VIDEO [YT]: https://youtu.be/aQgt_pTbD_E
 
