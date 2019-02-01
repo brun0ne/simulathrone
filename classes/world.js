@@ -57,10 +57,10 @@ class World {
             var maxY = this.spawn.maxY;
 
             if(this.spawn.range === false){ // on screen
-                minX = -s.w/2 / s.camera.p - s.camera.x;
-                maxX = s.w/2 / s.camera.p + s.camera.x;
-                minY = -s.h/2 / s.camera.p - s.camera.y;
-                maxY = s.h/2 / s.camera.p + s.camera.y;
+                minX = (-s.w/2 + s.camera.x) / s.camera.p;
+                maxX = (s.w/2 + s.camera.x) / s.camera.p;
+                minY = (-s.h/2 + s.camera.y) / s.camera.p;
+                maxY = (s.h/2 + s.camera.y) / s.camera.p;
             }
 
             for(var i = 0; i < this.spawn.amount; i++){
