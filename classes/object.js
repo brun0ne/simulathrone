@@ -1,4 +1,4 @@
-class Object {
+class Obj {
     constructor(x, y, r, c){ // x, y, radius, color
         this.x = x;
         this.y = y;
