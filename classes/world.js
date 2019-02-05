@@ -69,7 +69,7 @@ class World {
                 var x = random(minX + r, maxX - r);
                 var y = random(minY + r, maxY - r);
 
-                this.objects.push(new Object(x, y, r));
+                this.objects.push(new Obj(x, y, r));
             }
         }
         else{
