@@ -32,7 +32,7 @@ class Obj {
 
             var categ = world.getCategory(world.getCategory(this.cID).inherited[i]);
 
-            if(categ == null) // propably got deleted
+            if(categ == null) // probably got deleted
                 continue;
         
             for(var key in categ.obj_vars){
@@ -80,7 +80,7 @@ class Obj {
 
         this.draw();
 
-        if(world.getCategory(this.cID) == null){ // propably category was deleted
+        if(world.getCategory(this.cID) == null){ // probably category was deleted
             this.del();
             return false;
         }
@@ -106,7 +106,7 @@ class Obj {
             
             var categ = world.getCategory(world.getCategory(this.cID).inherited[i]);
 
-            if(categ == null) // propably got deleted
+            if(categ == null) // probably got deleted
                 continue;
 
             for(var key in categ.laws){
