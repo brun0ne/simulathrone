@@ -69,14 +69,3 @@ class Scr {
         }
     }
 }
-
-class Cursor{
-    constructor(){
-        this.x = 0;
-        this.y = 0;
-        this.deltaX = 0;
-        this.deltaY = 0;
-
-        this.press = 0;
-    }
-}

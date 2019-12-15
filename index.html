@@ -3,16 +3,26 @@
   <head>
     <title>Simulathrone</title>
     <meta charset="UTF-8" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="lib/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="lib/jquery-ui.css">
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="lib/lodash.js"></script>
+
     <link rel="stylesheet" href="main.css" />
   </head>
 
   <body>
     <canvas id="canvas"></canvas>
 
-    <div id="world_settings">
-        <textarea id="world_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">world_name</textarea>
-
+    <div id="world_info">
+        <span id="world_name" onclick="world.toggleSettings()" class="clickable2 noselect">-</span>
+        <br /><br />
+        <div id="categories">
+            Categories: <span id="category_add" class="clickable noselect" onclick="world.addCategory()">+</span>
+            <ul style="margin-left: -1%;" id="category_list"></ul>
+        </div>
+        <br />
         <div id="laws">
             Laws:&nbsp;&nbsp;<span class="clickable noselect" onclick="world.addLaw();">+</span>
             <ul style="margin-left: -1%;" id="laws_list"></ul>
@@ -21,6 +31,11 @@
         <div id="vars">
             Vars:&nbsp;&nbsp;<span class="clickable noselect" onclick="world.addObjVar();">+</span>
             <ul style="margin-left: -1%;" id="vars_list"></ul>
+        </div>
+        <br />
+        <div id="components">
+            Components:&nbsp;&nbsp;<span class="clickable noselect" onclick="world.chooseComponent();">+</span>
+            <ul style="margin-left: -1%;" id="components_list"></ul>
         </div>
     </div>
 
@@ -39,7 +54,7 @@
         X: <span id="info_x"></span><br />
         Y: <span id="info_y"></span>
 
-        <span id="info_box_close" class="clickable" onclick="s.getInfo()">close</span>
+        <span id="info_box_close" class="clickable noselect" onclick="s.getInfo()">close</span>
     </div>
 
     <div id="topr_buttons">
@@ -74,13 +89,80 @@
         </div>
         <br />
         <b>Size:</b> from <input id="spawn_size_min" class="options_input" onchange="world.setSpawnOpt('minSize', this.value)"></input> to <input id="spawn_size_max" class="options_input" onchange="world.setSpawnOpt('maxSize', this.value)"></input>
+        <br /><br />
+        <b>Category:</b> <select id="spawn_category" onchange="world.setSpawnOpt('category', this.value)"></select>
 
-        <span id="spawn_options_close" class="clickable" onclick="world.toggleSpawnOpt()">close</span>
+        <span id="spawn_options_close" class="clickable noselect" onclick="world.toggleSpawnOpt()">close</span>
+    </div>
+
+    <div id="category_settings" style="display: none;" class="window">
+        Category settings (<span id="category_settings_name"></span>):
+        <br /><br />
+        <div id="category_settings_inner">
+            Name: <input id="category_change_name" onchange="world.getCategory(world.edited_category).changeName(this.value)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></input>
+            <br /><br />
+            Inheritance: <span id="category_add_inheritance" class="clickable noselect" onclick="world.getCategory(world.edited_category).addInheritance()">+</span>
+            <br />
+            <ul id="category_inheritance_list"></ul>
+        </div>
+        <span class="clickable noselect window_close" onclick="world.toggleCategoryOpt()">close</span>
+    </div>
+
+    <div id="world_settings" style="display: none;" class="window">
+        World settings:
+        <br /><br />
+        <div id="world_settings_inner">
+            Name: <input id="world_change_name" onchange="world.changeSetting('name', this.value)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></input>
+            <br /><br />
+            Start(): <span class="clickable2" onclick="tryf('world start()', world.cStart)">&#8635;</span>
+            <br />
+            <textarea id="world_set_start" class="inner_editor" onchange="world.changeFunction('start')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+            <br /><br />
+            Update():<br />
+            <textarea id="world_set_update" class="inner_editor" onchange="world.changeFunction('update')" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        </div>
+        <span class="clickable noselect window_close" onclick="world.toggleSettings()">close</span>
+    </div>
+
+    <div id="component_choose_window" class="window" style="display: none; width: 20%; height: 20%; left: 40%; top: 15%;">
+        <center>
+            <h3>Choose component:</h3>
+            <select id="component_choose_select">
+                <option value="AI">AI</option>
+            </select>
+            <br /><br /><br />
+            <button onclick="world.addComponent()">Add</button>
+        </center>
+        <span class="clickable noselect window_close" onclick="$('#component_choose_window').hide()">close</span>
     </div>
     
+    <div id="ai_edit_window" class="window" style="left: 25%; top: 15%; background: rgba(0, 0, 0, 0.7); display: none; overflow: hidden;">
+        Edit AI:
+        <div id="ai_editor">
+            <!-- INPUTS -->
+            <div style="position: absolute; left: 5%; top: 43%;">Inputs <span class="clickable noselect" onclick="world.edited_component.addInput();">+</span></div>
+            <div id="ai_input_list" style="position: absolute; left: 20%; top: 10%; height: 85%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;"></div>
+            <!-- LAYERS -->
+            <div style="position: absolute; left: 37%; top: 43%;"><span class="clickable2 noselect" onclick="world.edited_component.changeLayerSize();">Layers</span> <span class="clickable noselect" onclick="world.edited_component.addLayer();">+</span> <span class="clickable noselect" onclick="world.edited_component.delLayer();">-</span></div>
+            <div id="layers_wrapper"></div>
+            <!-- OUTPUTS -->
+            <div id="ai_outputs_title" style="position: absolute; top: 43%;">Outputs <span class="clickable noselect" onclick="world.edited_component.addOutput();">+</span></div> <!-- "left" is set by JS-->
+            <div id="ai_output_list" style="position: absolute; top: 10%; height: 85%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;"></div>
+        </div>
+        <span class="clickable noselect window_close" onclick="$('#ai_edit_window').hide()">close</span>
+    </div>
+
+    <div id="ai_generation" style="position: fixed; left: 1.5%; bottom: 7%; color: rgba(255, 255, 255, 0.6); font-size: 1.4vw;"></div>
+
+    <script src="classes/misc.js"></script>
     <script src="classes/scr.js"></script>
     <script src="classes/world.js"></script>
     <script src="classes/object.js"></script>
+    <script src="classes/category.js"></script>
+    <script src="classes/ai.js"></script>
+    <script src="classes/component.js"></script>
     <script src="main.js"></script>
+
+    <script src="script.js"></script>
   </body>
 </html>

@@ -1,0 +1,198 @@
+======== #1 ========
+
+if(obj.speedX > 6)
+	obj.speedX = 6;
+if(obj.speedY > 6)
+	obj.speedY = 6;
+if(obj.speedX < -6)
+	obj.speedX = -6;
+if(obj.speedY < -6)
+	obj.speedY = -6;
+
+obj.x += obj.speedX * world.time;
+obj.y += obj.speedY * world.time;
+
+c = obj.collide(obj.r, 2);
+d = obj.collide(obj.r, 1);
+
+if(c){
+	if(c.cID == 2){ // food
+		obj.eaten += 1;
+		c.del();
+	}
+}
+if(d){
+	if(d.cID == 1){ // other ai
+		d.del();
+		obj.del();
+	}
+}
+
+obj.near_food_x = obj.nearest([2]).x;
+obj.near_ai_x = obj.nearest([1]).x;
+obj.near_food_y = obj.nearest([2]).y;
+obj.near_ai_y = obj.nearest([1]).y;
+
+if(obj.x > 1000)
+	obj.x = -1000;
+if(obj.x < -1000)
+	obj.x = 1000;
+if(obj.y > 1000)
+	obj.y = -1000;
+if(obj.y < -1000)
+	obj.y = 1000;
+
+
+======== #2 ========
+
+if(obj.speedX > 6)
+	obj.speedX = 6;
+if(obj.speedY > 6)
+	obj.speedY = 6;
+if(obj.speedX < -6)
+	obj.speedX = -6;
+if(obj.speedY < -6)
+	obj.speedY = -6;
+
+obj.x += obj.speedX * world.time;
+obj.y += obj.speedY * world.time;
+
+b = obj.collide(obj.r, 1);
+c = obj.collide(obj.r, 2);
+d = obj.collide(obj.r, 3);
+
+if(b){
+	if(b.cID == 1){ // friend
+		if(obj.r > 20){
+			if(b.eaten <= 1 && obj.altruism > 0){
+				b.eaten++;
+				b.r++;
+				obj.r--;
+			}
+		}
+	}
+}
+if(c){
+	if(c.cID == 2){ // food
+		obj.eaten += 1;
+		obj.r += 1;
+		c.del();
+	}
+}
+if(d){
+	if(d.cID == 3){ // enemy
+		if(obj.r > d.r){
+			obj.r += d.r;
+			d.del();
+		}
+	}
+}
+
+if(obj.eaten <= 2 && obj.r > 20){
+	obj.eaten++;
+	obj.r--;
+}
+
+if(obj.r >= 80){
+	world.addObj(new Obj(obj.x, obj.y, 40, obj.c, obj.cID), true);
+    world.objects[world.objects.length-1].components[0].clone(obj.components[0]);
+    world.objects[world.objects.length-1].components[0].mutate(MUTATION);
+	world.objects[world.objects.length-1].eaten = obj.eaten/2;
+	obj.r -= 40;
+}
+
+obj.near_food_x = obj.nearest([2]).x;
+obj.near_food_y = obj.nearest([2]).y;
+
+obj.near_ai_x = obj.nearest([3]).x;
+obj.near_ai_y = obj.nearest([3]).y;
+obj.near_ai_r = obj.nearest([3]).obj.r;
+
+obj.near_friend_x = obj.nearest([1]).x;
+obj.near_friend_y = obj.nearest([1]).y;
+
+if(obj.x > 1000)
+	obj.x = -1000;
+if(obj.x < -1000)
+	obj.x = 1000;
+if(obj.y > 1000)
+	obj.y = -1000;
+if(obj.y < -1000)
+	obj.y = 1000;
+
+------------------------------------------------------
+
+if(obj.speedX > 6)
+	obj.speedX = 6;
+if(obj.speedY > 6)
+	obj.speedY = 6;
+if(obj.speedX < -6)
+	obj.speedX = -6;
+if(obj.speedY < -6)
+	obj.speedY = -6;
+
+obj.x += obj.speedX * world.time;
+obj.y += obj.speedY * world.time;
+
+b = obj.collide(obj.r, 3);
+c = obj.collide(obj.r, 2);
+d = obj.collide(obj.r, 1);
+
+if(b){
+	if(b.cID == 3){ // friend
+		if(obj.r > 20){
+			if(b.eaten <= 1 && obj.altruism > 0){
+				b.eaten++;
+				b.r++;
+				obj.r--;
+			}
+		}
+	}
+}
+if(c){
+	if(c.cID == 2){ // food
+		obj.eaten += 1;
+		obj.r += 1;
+		c.del();
+	}
+}
+if(d){
+	if(d.cID == 1){ // enemy
+		if(obj.r > d.r){
+			obj.r += d.r;
+			d.del();
+		}
+	}
+}
+
+if(obj.eaten <= 2 && obj.r > 20){
+	obj.eaten++;
+	obj.r--;
+}
+
+if(obj.r >= 80){
+	world.addObj(new Obj(obj.x, obj.y, 40, obj.c, obj.cID), true);
+    world.objects[world.objects.length-1].components[0].clone(obj.components[0]);
+    world.objects[world.objects.length-1].components[0].mutate(MUTATION);
+	world.objects[world.objects.length-1].eaten = obj.eaten/2;
+	obj.r -= 40;
+}
+
+obj.near_food_x = obj.nearest([2]).x;
+obj.near_food_y = obj.nearest([2]).y;
+
+obj.near_ai_x = obj.nearest([1]).x;
+obj.near_ai_y = obj.nearest([1]).y;
+obj.near_ai_r = obj.nearest([1]).obj.r;
+
+obj.near_friend_x = obj.nearest([3]).x;
+obj.near_friend_y = obj.nearest([3]).y;
+
+if(obj.x > 1000)
+	obj.x = -1000;
+if(obj.x < -1000)
+	obj.x = 1000;
+if(obj.y > 1000)
+	obj.y = -1000;
+if(obj.y < -1000)
+	obj.y = 1000;

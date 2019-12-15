@@ -1,0 +1,21 @@
+- obj.move with angle support DONE
+- add categories DONE
+- move laws to categories DONE
+- move vars to categories DONE
+- add categories settings (button next to -) DONE
+- inheritance in categories settings DONE
+- inherited laws DONE
+- inherited vars DONE
+- name change in categories settings DONE
+- draggable categories settings window DONE
+- save and load simulation state CURRENTLY PRESETS
+- world settings with editable start and update DONE
+- replace vars with start func / add start func (for obj)
+- background color as a var (+ rgba class) DONE
+- add components DONE
+- add AI as available component DONE
+- add AI editing window
+- make AI work
+    > AI cloning with mutations
+    > control functions (evolution)
+        > scripts loading?

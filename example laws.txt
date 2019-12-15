@@ -25,14 +25,14 @@ else
 
 # ----
 
-if(obj.y < s.h)
-	obj.speed += 0.2;
-if(obj.y + obj.r > s.h){
-	obj.speed = -obj.speed / 2;
-	obj.y = s.h - obj.r;
+if(obj.y + obj.r < s.h / 2)
+	obj.speedY += 0.2;
+if(obj.y + obj.r > s.h / 2){
+	obj.speedY = -obj.speedY / 2;
+	obj.y = s.h / 2 - obj.r;
 }
 
-obj.y += obj.speed;
+obj.y += obj.speedY;
 
 # ----
 
@@ -124,3 +124,15 @@ if(obj.y + obj.r > size){
 
 obj.x += obj.speedX * world.time;
 obj.y += obj.speedY * world.time;
+
+# ----
+
+obj.move(obj.speedX * world.time, obj.speedY * world.time, obj.angle);
+
+for(var i = 0; i < world.objects.length; i++){
+	dX = obj.x - world.objects[i].x;
+	dY = obj.y - world.objects[i].y;
+	a = Math.sqrt(dX*dX + dY*dY);
+
+	obj.angle += a / 10000;
+}

@@ -16,7 +16,7 @@ body {
     padding: 0;
 }
 
-#world_settings{
+#world_info{
     position: fixed;
     left: 1.5%;
     top: 2%;
@@ -31,6 +31,15 @@ body {
     font-size: 1.8vw;
     width: 50%;
     height: 15%;
+}
+
+#categories{
+    margin-left: 1%;
+}
+
+#category_list{
+    margin-left: 2%;
+    margin-top: 2.5%;
 }
 
 #laws{
@@ -148,6 +157,96 @@ body {
     font-size: 0.6vw;
 }
 
+#category_settings{
+    left: 34.25%;
+    top: 10%;
+}
+
+#category_settings_inner{
+    font-size: 0.75vw;
+    overflow-y: auto;
+    position: absolute;
+    top: 45px;
+    bottom: 15px;
+    left: 15px;
+    right: 20px;
+}
+
+#category_inheritance_list{
+    font-size: 0.75vw;
+}
+
+#category_change_name{
+    background: none;
+    color: white;
+    border: none;
+    border-bottom: solid 1px white;
+    text-align: center;
+    width: 15%;
+}
+
+#world_settings{
+    position: fixed;
+    left: 14.25%;
+    top: 25%;
+    width: 27%;
+    height: 50%;
+}
+
+#world_settings_inner{
+    font-size: 0.75vw;
+    overflow-y: auto;
+    position: absolute;
+    top: 45px;
+    bottom: 15px;
+    left: 15px;
+    right: 20px;
+}
+
+#world_change_name{
+    background: none;
+    color: white;
+    border: none;
+    border-bottom: solid 1px white;
+    text-align: center;
+    width: 20%;
+}
+
+#ai_editor{
+    height: 80%;
+}
+
+.window{
+    position: fixed;
+    width: 30%;
+    height: 40%;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.5%;
+    color: white;
+    border: solid 1px white;
+    opacity: 0.8;
+    font-size: 0.8vw;
+}
+
+.window_close{
+    position: absolute;
+    right: 2%;
+    top: 6px;
+    font-size: 0.6vw;
+}
+
+.inner_editor{
+    background: rgba(0, 0, 0, 0.5);
+    margin: 2%;
+    width: 91%;
+    min-height: 25%;
+    height: auto;
+    resize: vertical;
+    max-width: inherit;
+    border: solid 1px rgba(255, 255, 255, 0.5);
+    padding: 2%;
+}
+
 textarea{
     border: none;
     background: none;
@@ -176,13 +275,13 @@ textarea{
 }
 
 textarea,
-pre {
+pre{
     -moz-tab-size : 4;
       -o-tab-size : 4;
          tab-size : 4;
 }
 
-.noselect {
+.noselect{
     -webkit-touch-callout: none;
       -webkit-user-select: none;
        -khtml-user-select: none;
@@ -200,4 +299,9 @@ pre {
     border: none;
     border-bottom: 1px solid white;
     color: white;
+}
+
+.flex_vert_item{
+    display: table-cell;
+    vertical-align: middle;
 }
