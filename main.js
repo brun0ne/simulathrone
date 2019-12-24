@@ -81,15 +81,6 @@ function tryf(name, func){
     }
 }
 
-function copyAI(old){
-    var copy = new AI();
-    copy.layer_size = old.layer_size;
-
-    for(var i = 0; i < old.inputs.length; i++){
-        copy.inputs.push(new Input(old.inputs[i].ID, old.inputs[i].ref, old.inputs[i].val));
-    }
-}
-
 var customVars = {
     "_COLOR":"c",
     "_POS_X":"x",
