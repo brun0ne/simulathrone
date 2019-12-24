@@ -14,8 +14,8 @@
 - background color as a var (+ rgba class) DONE
 - add components DONE
 - add AI as available component DONE
-- add AI editing window
+- add AI editing window DONE
 - make AI work
-    > AI cloning with mutations
-    > control functions (evolution)
+    > AI cloning with mutations DONE
+    > control functions (evolution) DONE
         > scripts loading?
