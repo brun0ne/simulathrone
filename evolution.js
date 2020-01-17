@@ -1,4 +1,4 @@
-// TODO dinamically loaded scripts
+// TODO dynamically loaded scripts
 
 var AI_CATEG = 1;
 
