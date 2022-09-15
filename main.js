@@ -48,7 +48,7 @@ $(document).ready(function(){
 
     Start();
 
-    preset(1); // LOAD PRESET
+    preset(0); // LOAD PRESET
 });
 
 window.onresize = function(){
